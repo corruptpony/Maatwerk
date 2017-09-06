@@ -5,8 +5,13 @@ using UnityEngine;
 public class StartUp : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Awake() {
         foreach (Transform child in transform)
-            child.gameObject.SetActive(true);
+        {
+            if(child.tag == "Target")
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
     }
 }
