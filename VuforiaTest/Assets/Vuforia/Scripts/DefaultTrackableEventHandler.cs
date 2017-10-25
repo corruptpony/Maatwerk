@@ -71,16 +71,33 @@ namespace Vuforia
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 
-            // Enable rendering:
-            foreach (Renderer component in rendererComponents)
+            if(this.gameObject.tag != "VuMark")
             {
-                component.enabled = true;
-            }
+                // Enable rendering:
+                foreach (Renderer component in rendererComponents)
+                {
+                    component.enabled = true;
+                }
 
-            // Enable colliders:
-            foreach (Collider component in colliderComponents)
+                // Enable colliders:
+                foreach (Collider component in colliderComponents)
+                {
+                    component.enabled = true;
+                }
+            }
+            else
             {
-                component.enabled = true;
+                Transform[] transforms = GetComponentsInChildren<Transform>();
+                string markerID = GetComponent<VuMarkBehaviour>().VuMarkTarget.InstanceId.StringValue;
+                Debug.Log(markerID);
+                
+                foreach (Transform tf in transforms)
+                {
+                    if(tf.tag == markerID)
+                    {
+                        tf.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                }          
             }
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");

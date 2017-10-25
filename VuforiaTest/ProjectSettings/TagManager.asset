@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Target
+  - VuMark
+  - VuMark00
+  - VuMark01
+  - VuMark02
+  - VuMark05
   layers:
   - Default
   - TransparentFX
