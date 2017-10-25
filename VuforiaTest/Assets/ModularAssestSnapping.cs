@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ModularAssestSnapping : MonoBehaviour {
 
+    public float xStepSize = 1;
+    public float zStepSize = 1;
+    public float rotationStepSize = 90;
+
 	// Use this for initialization
 	void Start () {
         Transform[] transforms = GetComponentsInChildren<Transform>();
@@ -13,38 +17,65 @@ public class ModularAssestSnapping : MonoBehaviour {
             if (tf == this.transform)
                 continue;
 
-            float posX = Mathf.Round(tf.position.x);
+            // Set Position to grid
+            float posX = determinePosition(tf.position.x, xStepSize);
             float posY = 0f;
-            float posZ = Mathf.Round(tf.position.z * 2) / 2;
+            float posZ = determinePosition(tf.position.z, zStepSize);
 
             Vector3 newPos = new Vector3(posX, posY, posZ);
 
             tf.position = newPos;
 
-            float rotX = -90f;
-            float rotY = 0f;
-            float rotZ = determineZRotation(tf.eulerAngles.z);
+            // Set Rotation to grid
+            float rotX = 0f;
+            float rotY = determineYRotation(tf.localEulerAngles.y);
+            float rotZ = 0f;
 
-            Debug.Log(rotX + "." + rotY + "." + rotZ);
+            Debug.Log(tf.localEulerAngles);
 
-            tf.rotation = Quaternion.Euler(rotX, rotY, rotZ);
-            
-            
+            Vector3 newRot = new Vector3(rotX, rotY, rotZ);
+
+            tf.eulerAngles = newRot;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    float determineZRotation(float rot)
+    /* Positions start at 0 and have snapping points every stepSize units */
+    float determinePosition(float pos, float stepSize)
     {
-        Debug.Log(rot);
-        if (rot > 90f && rot < 270f)
+        if(pos % stepSize < stepSize / 2)
         {
-            return 180f;
+            return pos - (pos % stepSize);
         }
-        else return 0f;
+        else
+        {
+            return pos - (pos % stepSize) + stepSize;
+        }
+    }
+
+    /* Set the Y rotation to the nearest multiple of rotationStepSize between 0 and 359 */
+    float determineYRotation(float rot)
+    {
+        // Work with positive rotations only
+        while (rot < 0f)
+            rot += 360;
+
+        // Work with whole numbers only
+        rot = Mathf.Round(rot);
+
+        // Get 0ffset
+        float offset = rot % rotationStepSize;
+
+        // Round down to nearest multiple of rotationStepSize
+        rot = rot - (rot % rotationStepSize);
+
+        // an offset larger than half the rotationStepSize neans it should have been rounded up instead
+        if (offset > rotationStepSize / 2)
+            rot += rotationStepSize;
+
+        // Make rotation between 0 and 359
+        while (rot >= 360)
+            rot -= 360;
+
+        return rot;
     }
 }

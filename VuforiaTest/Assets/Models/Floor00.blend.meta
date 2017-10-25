@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1a4ebdcb3df57e9468fab891e26e53f5
-timeCreated: 1506687194
+guid: 4a28a9ec03471af42bb471fe4cc7289b
+timeCreated: 1508933079
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Wall02
+    4300000: Floor
     7400000: Default Take
     9500000: //RootNode
   materials:
