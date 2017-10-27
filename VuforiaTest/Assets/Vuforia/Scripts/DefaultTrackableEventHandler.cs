@@ -17,6 +17,7 @@ namespace Vuforia
         #region PRIVATE_MEMBER_VARIABLES
  
         private TrackableBehaviour mTrackableBehaviour;
+        private int markCounter = 0;
     
         #endregion // PRIVATE_MEMBER_VARIABLES
 
@@ -89,7 +90,6 @@ namespace Vuforia
             {
                 Transform[] transforms = GetComponentsInChildren<Transform>();
                 string markerID = GetComponent<VuMarkBehaviour>().VuMarkTarget.InstanceId.StringValue;
-                Debug.Log(markerID);
                 
                 foreach (Transform tf in transforms)
                 {
@@ -102,7 +102,6 @@ namespace Vuforia
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
-
 
         private void OnTrackingLost()
         {
