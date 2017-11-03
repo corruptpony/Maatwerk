@@ -16,5 +16,6 @@ namespace Vuforia
     /// </summary>
     public class VuMarkBehaviour : VuMarkAbstractBehaviour
     {
+        public bool snapped { get; set; }
     }
 }
